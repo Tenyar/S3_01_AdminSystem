@@ -1,0 +1,21 @@
+#!/bin/bash
+current_date=$(date -I)
+Usb_repo=/media/kersuaar/NOM_USB
+if [ -d "$Usb_repo" ]
+then
+	echo 'Clé présente'
+	dest="$Usb_repo"
+else
+	echo 'Aucune clé (USB) présente, tmp choisit par défaut.'
+	dest="/tmp"
+fi
+
+if [ "$#" == 0  ]
+then
+	echo 'Aucun argument donnée ! archivage du homedir complet'
+# $HOME works because its a shell variable that contains the path to the users home directory
+	tar --exclude="$HOME/.var" --zstd -cvf "$dest/$current_date.tar.zstd" ~/*
+else
+	echo 'Argument donnée ! archivade de cet élément'
+	tar --zstd -cvf "$dest/$current_date.$1.tar.zstd" ~/"$1"
+fi

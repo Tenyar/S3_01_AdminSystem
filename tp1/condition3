@@ -1,0 +1,10 @@
+#!/bin/bash
+echo -n 'Choisit un nom de fichier: '
+read nom_fichier
+echo "le fichier que vous avez choisit: $nom_fichier"
+if [ -e "$nom_fichier"  ]
+then
+	echo 'fichier trouvé'
+else
+	echo 'fichier non trouvé'
+fi

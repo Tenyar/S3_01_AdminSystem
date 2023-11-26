@@ -1,0 +1,91 @@
+#!/bin/bash
+
+#CONSTANTES
+
+PINK='\033[38;5;206m'  # This is a mix of red and white
+ORANGE='\033[0;33m'
+NC='\033[0m' # No Color
+##############################################################################################
+affiche()
+##############################################################################################
+# procédure récursive qui :
+#    - affiche le nom du répertoire courant précédé de la chaîne d indentation reçue en paramètre
+#    - réalise une itération qui parcourt toutes les entrées du répertoire courant
+#       et pour chaque sous-répertoire que nous pouvons traverser:
+#	   -- se positionne sur ce sous répertoire
+#          -- réalise un appel récursif avec une chaîne d indentation augmentée de 2 espaces
+#      si l on ne peut traverser un sous-répertoire, on se contente d écrire son nom
+#      précédé de la chaîne d indentation augmentée de 2 espaces
+##############################################################################################
+{
+if [ -z "$2" ]
+then
+        # Local variable for current repository
+        arg2=$(pwd)
+else
+        arg2="$2"
+fi
+
+if [ "$1" == "non" ]
+then
+	# Check if directory is empty
+	if [ ! -z "$(ls -A $arg2)" ]
+	then
+        	# Loop through every item inside the current directory
+        	for items in "$arg2"/*; do
+            		if [ -d "$items" ]
+            		then
+				# -e for interpreting '\'
+                		echo -e "${ORANGE}Folder :${NC} $items"
+		                # Go into sub_directory
+                		affiche "$1" "$items"
+            		else
+                		echo "File : $items"
+            		fi
+        	done
+    	else
+		echo "Directory is empty : $arg2"
+	fi
+else
+	if [ ! -z "$(ls -A $arg2)" ]
+	then
+		# Hidden files too
+        	for items in "$arg2"/* "$arg2"/.*; do
+            		if [ -d "$items" ]
+            		then
+				folderName=$(basename "$items")
+				firstChar="${folderName:0:1}"
+				if [ "$firstChar" = "." ]; then
+                			echo -e "${PINK}Hidden folder :${NC} $items"
+				else
+					echo -e "${ORANGE}Folder :${NC} $items"
+				fi
+	               		# Go into sub_directory
+        	        	affiche "$1" "$items"
+            		else
+				# Extracting the file name from the whole path
+				fileName=$(basename "$items")
+				# Get only his first character to see if it's a hidden file
+				firstChar="${fileName:0:1}"
+
+				if [ ! "$fileName" = ".*" ]; then
+					if [ "$firstChar" = "." ]; then
+						echo "Hidden file : $items"
+					else
+                				echo "File : $items"
+					fi
+				fi
+            		fi
+        	done
+	else
+		echo "Directory is empty : $arg2"
+    	fi
+fi
+}
+
+if [ ! -z "$1" ] && [ "$#" -le 2 ]
+then
+    affiche "$1" "$2"
+else
+    echo "Error: Incorrect number of arguments (function takes less or equal to 2 arguments)"
+fi

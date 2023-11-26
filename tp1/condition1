@@ -1,0 +1,17 @@
+#!/bin/bash
+if cp toto titi
+# le nobmre 0 = success
+# tous les autres nombre au dessus = failure
+then
+	echo 'success'
+else
+	echo 'failure'
+fi
+
+#return true pour un fichier qui existe dans le répertorie
+if cp prg.c titi
+then
+	echo 'success'
+else
+	echo 'failure'
+fi

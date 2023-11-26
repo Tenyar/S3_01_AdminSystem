@@ -1,0 +1,7 @@
+#!/bin/bash
+# Print simplement les caractères
+echo 'Un double slash \\ est doublement spécial'
+# Prend en compte les doubles \\ et n'en fais qu"un
+echo "Un double slash \\ est doublement spécial"
+# Ne prend pas en compte car ce n'est pas une commande valable
+echo `Un double slash \\ est doublement spécial`

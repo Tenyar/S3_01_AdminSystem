@@ -1,0 +1,7 @@
+#!/bin/bash
+# Ne prend pas en compte la variable
+echo '$USER'
+# Prend en compte la valeur de la variable
+echo "$USER"
+# N'est pas adapté pour les variables
+echo `$USER`

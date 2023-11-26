@@ -1,0 +1,9 @@
+#!/bin/bash
+echo 'date -I'
+echo "date -I"
+# Méthode obsletère pour subsituer une commande.
+echo `date -I`
+# Méthode moderne:
+echo $(date -I)
+# Création du dossier
+echo $(mkdir $(date -I))

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo $(seq 0 1 10)

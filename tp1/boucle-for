@@ -1,0 +1,16 @@
+#!/bin/bash
+
+for i in abc 123 toto titi
+do
+  echo "Dans la boucle : i=$i"
+done
+
+for j in $(seq 1 10)
+do
+echo "Numéro : $j"
+done
+
+for fichier in *
+do
+echo "$fichier"
+done

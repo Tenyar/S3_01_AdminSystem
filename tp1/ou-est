@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "$1 est dans une salle parmi les suivantes :"
+#variables
+ma_salle=$(rwho | grep kersuaar | cut -c 16-18 | uniq)
+echo "$ma_salle"

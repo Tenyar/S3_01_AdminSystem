@@ -1,0 +1,41 @@
+#!/bin/bash
+if [ "$#" -eq 0 ]
+then
+	echo "Default repository selected"
+	for fichier in *
+	do
+		file_extension="${fichier##*.}"
+		if [ "$file_extension" == "png" ]
+		then
+		echo "Images"
+# Utilisation de basename et convert pour changer le format de l'image.
+		fileNameFormat=$(basename "$fichier")
+		fileName=$(basename "$fichier" .png)
+		convert "$fileNameFormat" "$fileName".jpeg
+		else
+		echo "Not an image"
+		fi
+	done
+else
+	if [ "$1" = "." ] || [ -d "$1" ]
+	then
+		echo "$1 repository selected"
+		for fichier in "$1"*
+		do
+			file_extension="${fichier##*.}"
+			if [ "$file_extension" == "png" ]
+			then
+			echo "Images"
+# On à 2 variables, celle avec un format et l'autre sans. (correspond au nom du fichier)
+			fileNameFormat=$(basename "$fichier")
+			fileName=$(basename "$fichier" .png)
+			convert "$1/$fileNameFormat" "$fileName".jpeg
+			echo "$fileNameFormat -----> $fileName.jpeg"
+			else
+			echo "Not an image"
+			fi
+		done
+	else
+		echo "Didn't specified folder or current repository /!/"
+	fi
+fi
